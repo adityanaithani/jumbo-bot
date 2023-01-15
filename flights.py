@@ -6,22 +6,36 @@ params = {
 }
 
 flights = "http://airlabs.co/api/v9/flights"
-flight_res = requests.get(flights, params)
-flight_json = flight_res.json()["response"]
+flights_res = requests.get(flights, params)
+flights_json = flights_res.json()["response"]
 
 airports = "http://airlabs.co/api/v9/airports"
 airport_res = requests.get(airports, params)
 airport_json = airport_res.json()["response"]
 
+
 # gets flight data from flight number
 def get_flight(flight_number):
-    for flight in flight_json:
+    for flight in flights_json:
         if "flight_iata" in flight:
             if flight["flight_iata"] == flight_number:
                 return flight
-    return "Flight not found"
+    return
 
 
+# gets departure airport name from flight number
+def get_departure(flight_number):
+    flight = get_flight(flight_number)
+    if flight == "Flight not found":
+        return "Flight not found"
+    else:
+        for airport in airport_json:
+            if airport["iata_code"] == flight["dep_iata"]:
+                return airport["name"]
+        return "Airport not found"
+
+
+# gets arrival airport name from flight number
 def get_arrival(flight_number):
     flight = get_flight(flight_number)
     if flight == "Flight not found":
@@ -31,3 +45,27 @@ def get_arrival(flight_number):
             if airport["iata_code"] == flight["arr_iata"]:
                 return airport["name"]
         return "Airport not found"
+
+
+# gets departure time from flight number
+def get_departure_time(flight_number):
+    flight = "https://airlabs.co/api/v9/flight?flight_iata=" + flight_number
+    flight_res = requests.get(flight, params)
+    flight_json = flight_res.json()["response"]
+    # print(flight_json)
+    if "dep_time" in flight_json:
+        return flight_json["dep_time"]
+    else:
+        return "departure time not found"
+
+
+# gets arrival time from flight number
+def get_arrival_time(flight_number):
+    flight = "https://airlabs.co/api/v9/flight?flight_iata=" + flight_number
+    flight_res = requests.get(flight, params)
+    flight_json = flight_res.json()["response"]
+
+    if "arr_time" in flight_json:
+        return flight_json["arr_time"]
+    else:
+        return "arrival time not found"

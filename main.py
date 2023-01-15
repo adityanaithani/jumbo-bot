@@ -6,7 +6,7 @@ import flights
 
 
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="$", intents=intents)
+bot = commands.Bot(command_prefix="!", intents=intents)
 
 
 @bot.event
@@ -25,11 +25,33 @@ async def test(ctx, *, arg):
 # display general flight info (flight number, origin, destination, departure time, arrival time)
 @bot.command()
 async def flight(ctx, arg):
-    airport = flights.get_arrival(arg)
-    if airport == "Flight not found":
-        await ctx.send("Flight not found")
-    else:
-        await ctx.send(airport)
+    # origin airport
+    origin = flights.get_departure(arg)
+    # destination airport
+    destination = flights.get_arrival(arg)
+    # departure time
+    departure_time = flights.get_departure_time(arg)
+    # arrival time
+    arrival_time = flights.get_arrival_time(arg)
+    # departure gate
+    # arrival gate
+
+    embed = discord.Embed(
+        title="General Flight Data",
+        description="Flight " + arg + "  to " + destination,
+        color=discord.Color.green(),
+    )
+
+    embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar)
+
+    embed.add_field(name="Origin", value=origin, inline=False)
+    embed.add_field(name="Destination", value=destination, inline=False)
+    embed.add_field(name="Departure Time", value=departure_time, inline=False)
+    embed.add_field(name="Arrival Time", value=arrival_time, inline=True)
+
+    embed.set_footer(text="Made with ❤️ by adi#4917")
+
+    await ctx.send(embed=embed)
 
 
 @bot.command()
@@ -55,6 +77,4 @@ async def embed(ctx):
     await ctx.send(embed=embed)
 
 
-# if running on replit, replace token with os.getenv('TOKEN')
-# bot.run("MTA2MzMxNTIwODk2NzI5MDkxMA.GiiGdz.k4IcN54kKy4OfFXdyLak0rFepxr_WFYS4Xzt7Y")
 bot.run(config("TOKEN"))
