@@ -1,7 +1,9 @@
+from decouple import config
 import discord
 from discord.ext import commands
 import os
 import flights
+
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="$", intents=intents)
@@ -54,4 +56,5 @@ async def embed(ctx):
 
 
 # if running on replit, replace token with os.getenv('TOKEN')
-bot.run("MTA2MzMxNTIwODk2NzI5MDkxMA.GYwO1b.2q1k_9l5Th8TOP3GFqJE83MPEmQT4L2PEfjimM")
+# bot.run("MTA2MzMxNTIwODk2NzI5MDkxMA.GiiGdz.k4IcN54kKy4OfFXdyLak0rFepxr_WFYS4Xzt7Y")
+bot.run(config("TOKEN"))
