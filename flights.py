@@ -1,8 +1,9 @@
+from decouple import config
 import requests
 import json
 
 params = {
-    "api_key": "ceca995a-94d2-404c-954f-e136aef2cfa6",
+    "api_key": config("AIRLABS_KEY"),
 }
 
 flights = "http://airlabs.co/api/v9/flights"
