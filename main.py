@@ -37,8 +37,8 @@ async def flight(ctx, arg):
     # arrival gate
 
     embed = discord.Embed(
-        title="General Flight Data",
-        description="Flight " + arg + "  to " + destination,
+        title="✈️ General Flight Info",
+        description="**~Flight " + arg + "~**",
         color=discord.Color.green(),
     )
 
@@ -48,29 +48,6 @@ async def flight(ctx, arg):
     embed.add_field(name="Destination", value=destination, inline=False)
     embed.add_field(name="Departure Time", value=departure_time, inline=False)
     embed.add_field(name="Arrival Time", value=arrival_time, inline=True)
-
-    embed.set_footer(text="Made with ❤️ by adi#4917")
-
-    await ctx.send(embed=embed)
-
-
-@bot.command()
-async def embed(ctx):
-
-    embed = discord.Embed(
-        title="Flight Info",
-        description="Information for flight ____",
-        color=discord.Color.green(),
-    )
-
-    embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar)
-
-    embed.add_field(name="Flight Number", value="____", inline=False)
-    embed.add_field(name="Origin", value="____", inline=True)
-    embed.add_field(name="Destination", value="____", inline=True)
-    embed.add_field(name="\u200b", value="\u200b", inline=False)
-    embed.add_field(name="Departure Time", value="____", inline=True)
-    embed.add_field(name="Arrival Time", value="____", inline=True)
 
     embed.set_footer(text="Made with ❤️ by adi#4917")
 
